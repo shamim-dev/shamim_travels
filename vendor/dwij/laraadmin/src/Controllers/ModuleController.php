@@ -35,6 +35,7 @@ class ModuleController extends Controller
 	public function index()
 	{
 		$modules = Module::all();
+		//print_r($modules); exit;
 		
 		return View('la.modules.index', [
 			'modules' => $modules

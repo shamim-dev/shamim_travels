@@ -73,6 +73,10 @@ Route::group(['as' => $as, 'middleware' => ['auth','locale','revalidate']], func
 	Route::post(config('laraadmin.adminRoute') . '/create_backup_ajax', 'LA\BackupsController@create_backup_ajax');
 	Route::get(config('laraadmin.adminRoute') . '/downloadBackup/{id}', 'LA\BackupsController@downloadBackup');
 
+	/* ================== Countries ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/countries', 'LA\CountriesController');
+	Route::get(config('laraadmin.adminRoute') . '/country_dt_ajax', 'LA\CountriesController@dtajax');
+	
 	/* ================== Divisions ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/divisions', 'LA\DivisionsController');
 	Route::get(config('laraadmin.adminRoute') . '/division_dt_ajax', 'LA\DivisionsController@dtajax');
@@ -106,6 +110,8 @@ Route::group(['as' => $as, 'middleware' => ['auth','locale','revalidate']], func
 	/* ================== Bank_Branches ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/bank_branches', 'LA\Bank_BranchesController');
 	Route::get(config('laraadmin.adminRoute') . '/bank_branch_dt_ajax', 'LA\Bank_BranchesController@dtajax');
+
+
 
 
 });
