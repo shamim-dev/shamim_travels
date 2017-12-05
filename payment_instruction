@@ -1,0 +1,155 @@
+CREATE TABLE `agent_info` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `agent_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `first_mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `second_mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `second_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(10) unsigned DEFAULT NULL,
+  `updated_by` int(10) unsigned DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `client_info` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`client_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+	`agent_id` int(10) unsigned NOT NULL,
+	`passport_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`client_image` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`passport_image` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active, 2=Medicale, 3=Visa_processing, 4=Training, 5=Flight, 6=Full Process Complete, 7=Passport Return',
+	`medicale_status` tinyint(1)  NULL DEFAULT NULL COMMENT '0=Unfit, 1=Fit',
+	`medicale_date` DATE DEFAULT NULL,
+	`is_visa_processing` tinyint(1) NULL DEFAULT NULL COMMENT '0=No, 1=Complete',
+	`visa_processing_date` DATE DEFAULT NULL,
+	`is_training_complete` tinyint(1) NULL DEFAULT NULL COMMENT '0=No, 1=Complete',
+	`training_date` DATE DEFAULT NULL,
+	`flight_date` DATE DEFAULT NULL,
+	`passport_return_date` DATE DEFAULT NULL,
+	`join_date` DATE DEFAULT NULL,
+	`created_at` timestamp NULL DEFAULT NULL,
+	`updated_at` timestamp NULL DEFAULT NULL,
+	`created_by` int(10) unsigned DEFAULT NULL,
+	`updated_by` int(10) unsigned DEFAULT NULL,
+	`deleted_at` timestamp NULL DEFAULT NULL,
+
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*First Data set in voucher*/
+	$voucher_no = $this->utilities->pk_f('bm_vouchermst'); // get Primary Key
+    $this->db->trans_start();
+    // insert data into Voucher Master Table
+    $v_master_data_array = array(
+        "VOUCHER_NO" => $voucher_no,
+        "VOUCHER_DT" => date("Y/m/d"),
+        "STUDENT_ID" => $stdReqId[$i],
+        "ROLL_NO" => $student_info->ROLL_NO,
+        "FACULTY_ID" => $cmbFaculty,
+        "DEPT_ID" => $department,
+        "PROGRAM_ID" => $program,
+        "SESSION_ID" => $session,
+        "SEMESTER_ID" => $semester,
+        "ORG_ID" => 1,
+        "REMARKS" => $remarks,
+        "CREATED_BY" => $this->user["USER_ID"]
+    );
+    $this->db->insert("bm_vouchermst", $v_master_data_array);
+    // echo "<pre>";
+    // print_r($get_semester_particulars);
+    // echo "</pre>";
+    // insert program particular information for each student
+    foreach ($get_semester_particulars as $particular) {
+        // insert data into Voucher Child Table
+        $trans_no = $this->utilities->pk_f('bm_voucherchd'); // get Primary Key
+        $v_chd_data_array = array(
+            "TRX_TRAN_NO" => $trans_no,
+            "TRX_TRAN_DT" => date("Y/m/d"),
+            "VOUCHER_NO" => $voucher_no,
+            "SESSION_ID" => $session,
+            "SEMISTER_ID" => $semester,
+            "PRTCULR_NO" => $particular->PARTICULAR_ID,
+            "BILL_AMT" => $particular->PARTICULAR_AMOUNT,
+            "PUNIT_PRICE" => $particular->PARTICULAR_AMOUNT,
+            "ORG_ID" => 1,
+            "REMARKS" => $remarks,
+            "CREATED_BY" => $this->user["USER_ID"]
+        );
+        $this->db->insert("bm_voucherchd", $v_chd_data_array);
+        // insert data into LEDGER Table
+        $ledger_pk = $this->utilities->pk_f('bm_vn_ledgers'); // get Primary Key
+        $ledger_data_array = array(
+            "VLEDGER_NO" => $ledger_pk,
+            "VLEDGER_DT" => date("Y/m/d"),
+            "TRX_CODE_NO" => "GR",
+            "TRX_TRAN_NO" => $trans_no,
+            "VOUCHER_NO" => $voucher_no,
+            "CR_AMT" => $particular->PARTICULAR_AMOUNT,
+            "PITEM_TQTY" => 1
+        );
+        $this->db->insert("bm_vn_ledgers", $ledger_data_array);
+    }
+ /*End*/
+
+
+/*Do Payment*/
+
+// insert data into Payment Master Table
+    $p_master_pk = $this->utilities->pk_f('bm_paymentmst'); // get Primary Key
+    $trans_no = $p_master_pk;
+    $p_master_data_array = array(
+        "TRX_TRAN_NO" => $p_master_pk,
+        "TRX_TRAN_DT" => date("Y/m/d"),
+        "TRAN_AMT" => $amount,
+        "COLLECTED_BY" => $user_session["USER_ID"],
+        "TRX_CODE_NO" => "PM",
+        "REMARKS" => $remarks,
+        "CREATED_BY" => $user_session["USER_ID"]
+    );
+    $this->db->insert("bm_paymentmst", $p_master_data_array);
+
+    // insert data into Payment Amount Table
+    for ($i = 0; $i < sizeof($payment_amt); $i++) {
+        if ($payment_amt[$i] != "") {
+            if (isset($payment_amt[0])) { // Cash Payment
+                $p_mode = "CS";
+            }
+            if (isset($payment_amt[1])) { // Cheque Payment
+                $p_mode = "CH";
+            }
+            if (isset($payment_amt[2])) { // Debit/Credit Card Payment
+                $p_mode = "CA";
+            }
+            $p_amount_pk = $this->utilities->pk_f('bm_paymodeamt'); // get Primary Key
+            $p_amount_data_array = array(
+                "MR_TRAN_NO" => $p_amount_pk,
+                "MR_TRAN_DT" => date("Y/m/d"),
+                "TRX_TRAN_NO" => $trans_no,
+                "MR_TRAN_AMT" => $payment_amt[$i],
+                "VOUCHER_NO" => $voucher_no,
+                "TRX_CODE_NO" => "PM",
+                "PAYMENT_MODE" => "$p_mode",
+                "REMARKS" => $remarks,
+                "ORG_ID" => 1,
+                "CREATED_BY" => $user_session["USER_ID"]
+            );
+            $this->db->insert("bm_paymodeamt", $p_amount_data_array);
+        }
+    }
+    // insert data into LEDGER Table
+    $ledger_pk = $this->utilities->pk_f('bm_vn_ledgers'); // get Primary Key
+    $ledger_data_array = array(
+        "VLEDGER_NO" => $ledger_pk,
+        "VLEDGER_DT" => date("Y/m/d"),
+        "TRX_CODE_NO" => "PM",
+        "TRX_TRAN_NO" => $trans_no,
+        "VOUCHER_NO" => $voucher_no,
+        "DR_AMT" => $payment_amt[0],
+        "PITEM_TQTY" => 0
+    );
+    $this->db->insert("bm_vn_ledgers", $ledger_data_array);
