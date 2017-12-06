@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 05, 2017 at 12:03 AM
+-- Generation Time: Dec 06, 2017 at 08:44 AM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `travels_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `agent_info`
+--
+
+CREATE TABLE IF NOT EXISTS `agent_info` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `agent_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `first_mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `second_mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `second_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(10) unsigned DEFAULT NULL,
+  `updated_by` int(10) unsigned DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -194,6 +216,203 @@ CREATE TABLE IF NOT EXISTS `basic_informations` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `basic_informations_national_id_unique` (`national_id`),
   KEY `basic_informations_birth_place_foreign` (`birth_place`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_paymentmst`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_paymentmst` (
+  `TRX_TRAN_NO` bigint(14) NOT NULL DEFAULT '0',
+  `TRX_TRAN_DT` date DEFAULT NULL,
+  `TRAN_AMT` double DEFAULT NULL,
+  `VOUCHER_NO` bigint(14) DEFAULT NULL,
+  `TRX_CODE_NO` varchar(10) DEFAULT NULL,
+  `COLLECTED_BY` varchar(16) DEFAULT NULL,
+  `TCANCEL_FG` varchar(1) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ORG_ID` int(11) NOT NULL DEFAULT '1',
+  `CREATED_BY` varchar(16) DEFAULT NULL,
+  `ENTRY_TIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_BY` varchar(16) DEFAULT NULL,
+  `UPDATE_TIMESTAMP` date DEFAULT NULL,
+  PRIMARY KEY (`TRX_TRAN_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_paymodeamt`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_paymodeamt` (
+  `MR_TRAN_NO` bigint(14) NOT NULL DEFAULT '0',
+  `MR_TRAN_DT` date NOT NULL,
+  `TRX_TRAN_NO` bigint(14) NOT NULL,
+  `MR_TRAN_AMT` double NOT NULL,
+  `VOUCHER_NO` bigint(14) NOT NULL,
+  `PAYMENT_MODE` varchar(2) NOT NULL,
+  `TRX_CODE_NO` varchar(10) NOT NULL,
+  `MRCANCEL_FG` varchar(1) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ORG_ID` int(11) NOT NULL,
+  `CREATED_BY` varchar(16) DEFAULT NULL,
+  `ENTRY_TIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_BY` varchar(16) DEFAULT NULL,
+  `UPDATE_TIMESTAMP` date DEFAULT NULL,
+  PRIMARY KEY (`MR_TRAN_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_trxcode_info`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_trxcode_info` (
+  `TRX_CODE_NO` varchar(10) NOT NULL DEFAULT '',
+  `NARRATION` varchar(30) NOT NULL,
+  `CRDR_TAG` varchar(2) DEFAULT NULL,
+  `REG_NO` bigint(14) DEFAULT NULL,
+  PRIMARY KEY (`TRX_CODE_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_vn_ledgers`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_vn_ledgers` (
+  `VLEDGER_NO` bigint(14) NOT NULL DEFAULT '0',
+  `VLEDGER_DT` date DEFAULT NULL,
+  `TRX_CODE_NO` varchar(10) DEFAULT NULL,
+  `TRX_TRAN_NO` bigint(14) DEFAULT NULL,
+  `VOUCHER_NO` bigint(14) DEFAULT NULL,
+  `APPROVAL_NO` bigint(14) DEFAULT NULL,
+  `CR_AMT` double DEFAULT NULL,
+  `DR_AMT` double DEFAULT NULL,
+  `PITEM_TQTY` int(11) DEFAULT NULL,
+  `CASH_POINT` int(11) DEFAULT NULL,
+  `SHIFT_NO` varchar(5) DEFAULT NULL,
+  `SHIFT_NAME` varchar(20) DEFAULT NULL,
+  `START_TIME` date DEFAULT NULL,
+  `END_TIME` date DEFAULT NULL,
+  `LCANCEL_FG` varchar(1) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ORG_ID` int(11) NOT NULL DEFAULT '1',
+  `CREATED_BY` int(11) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_BY` int(11) DEFAULT NULL,
+  `UPDATE_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`VLEDGER_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_voucherchd`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_voucherchd` (
+  `TRX_TRAN_NO` bigint(14) NOT NULL DEFAULT '0',
+  `TRX_TRAN_DT` date DEFAULT NULL,
+  `VOUCHER_NO` bigint(14) DEFAULT NULL,
+  `SESSION_ID` int(11) NOT NULL,
+  `SEMISTER_ID` int(11) NOT NULL,
+  `PRTCULR_NO` bigint(14) DEFAULT NULL,
+  `PITEM_BQTY` int(11) DEFAULT NULL,
+  `PITEM_CQTY` int(11) DEFAULT NULL,
+  `PUNIT_PRICE` float DEFAULT NULL,
+  `FEES_YYYYMM` int(6) DEFAULT NULL,
+  `TCANCEL_FG` varchar(1) DEFAULT NULL,
+  `DISC_AMT` int(11) DEFAULT NULL,
+  `VAT_AMT` int(11) DEFAULT NULL,
+  `BILL_AMT` float DEFAULT NULL,
+  `SOWNER_PAY` int(11) DEFAULT NULL,
+  `OOWNER_PAY` int(11) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ORG_ID` int(11) NOT NULL,
+  `CREATED_BY` int(11) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_BY` int(11) DEFAULT NULL,
+  `UPDATE_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`TRX_TRAN_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bm_vouchermst`
+--
+
+CREATE TABLE IF NOT EXISTS `bm_vouchermst` (
+  `VOUCHER_NO` bigint(14) NOT NULL DEFAULT '0',
+  `VOUCHER_DT` date DEFAULT NULL,
+  `STUDENT_ID` bigint(14) NOT NULL,
+  `ROLL_NO` varchar(20) DEFAULT NULL,
+  `FACULTY_ID` smallint(6) NOT NULL,
+  `DEPT_ID` int(11) NOT NULL,
+  `PROGRAM_ID` int(11) NOT NULL,
+  `SESSION_ID` int(11) NOT NULL,
+  `SEMESTER_ID` int(11) DEFAULT NULL,
+  `ORG_ID` int(11) NOT NULL,
+  `VCANCEL_FG` varchar(1) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `CREATED_BY` int(11) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UPDATED_BY` int(11) DEFAULT NULL,
+  `UPDATE_DATE` datetime DEFAULT NULL,
+  PRIMARY KEY (`VOUCHER_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_info`
+--
+
+CREATE TABLE IF NOT EXISTS `client_info` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `client_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `agent_id` int(10) unsigned NOT NULL,
+  `passport_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile_no` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `client_image` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `passport_image` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active, 2=Medicale, 3=Visa_processing, 4=Training, 5=Flight, 6=Full Process Complete, 7=Passport Return',
+  `medicale_status` tinyint(1) DEFAULT NULL COMMENT '0=Unfit, 1=Fit',
+  `medicale_date` date DEFAULT NULL,
+  `is_visa_processing` tinyint(1) DEFAULT NULL COMMENT '0=No, 1=Complete',
+  `visa_processing_date` date DEFAULT NULL,
+  `is_training_complete` tinyint(1) DEFAULT NULL COMMENT '0=No, 1=Complete',
+  `training_date` date DEFAULT NULL,
+  `flight_date` date DEFAULT NULL,
+  `passport_return_date` date DEFAULT NULL,
+  `join_date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(10) unsigned DEFAULT NULL,
+  `updated_by` int(10) unsigned DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_interest_country`
+--
+
+CREATE TABLE IF NOT EXISTS `client_interest_country` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` int(10) unsigned NOT NULL,
+  `country_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_client_interest_country_1_idx` (`client_id`),
+  KEY `fk_client_interest_country_2_idx` (`country_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -3602,6 +3821,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `name`, `context_id`, `emp_id`, `email`, `user_name`, `password`, `type`, `remember_token`, `user_level`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Super Admin', 1, NULL, 'akebulr@gmail.com', 'admin', '$2y$10$lhA9VpYOcEpQwpghPFbUYOGDXP7995LcljguFYCBnKJNii4BNbmey', 'Employee', 'nvYKHNCdV5hMZGBFs2YEGDedvspuFT3sjir9asEGJqocf8HRrkPU89CeGWPA', 0, NULL, '2017-02-18 20:35:37', '2017-10-13 22:05:57');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `client_info`
+--
+ALTER TABLE `client_info`
+  ADD CONSTRAINT `fk_client_info_1` FOREIGN KEY (`id`) REFERENCES `agent_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `client_interest_country`
+--
+ALTER TABLE `client_interest_country`
+  ADD CONSTRAINT `fk_client_interest_country_1` FOREIGN KEY (`client_id`) REFERENCES `client_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_client_interest_country_2` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
