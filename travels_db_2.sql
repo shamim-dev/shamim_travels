@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2017 at 08:44 AM
--- Server version: 5.5.49-0ubuntu0.14.04.1
+-- Generation Time: Dec 25, 2017 at 02:04 PM
+-- Server version: 5.5.58-0ubuntu0.14.04.1
 -- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `travels_db`
+-- Database: `travels_db_2`
 --
 
 -- --------------------------------------------------------
@@ -34,13 +34,24 @@ CREATE TABLE IF NOT EXISTS `agent_info` (
   `first_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `second_email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` text COLLATE utf8_unicode_ci,
+  `photo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_by` int(10) unsigned DEFAULT NULL,
   `updated_by` int(10) unsigned DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `agent_info`
+--
+
+INSERT INTO `agent_info` (`id`, `agent_name`, `first_mobile_no`, `second_mobile_no`, `first_email`, `second_email`, `address`, `photo`, `created_at`, `updated_at`, `created_by`, `updated_by`, `deleted_at`) VALUES
+(1, 'MR. RAHIM kHAN', '01728581566', '01920536214', 'rahim@gmail.com', 'rahim@yahoo.com', 'Dhaka, Bangladesh', '', NULL, '2017-12-25 12:52:35', NULL, 1, NULL),
+(2, 'abc', '01920536213', '', 'abc@email.com', '', '', '', '2017-12-25 12:06:25', '2017-12-25 13:05:47', NULL, 1, NULL),
+(3, 'abc', '01920536213', '', '', '', '', '', '2017-12-25 12:06:50', '2017-12-25 12:06:50', NULL, NULL, NULL),
+(4, 'abc', '01920536213', '', '', '', '', '', '2017-12-25 12:07:33', '2017-12-25 13:02:06', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -351,13 +362,8 @@ CREATE TABLE IF NOT EXISTS `bm_voucherchd` (
 CREATE TABLE IF NOT EXISTS `bm_vouchermst` (
   `VOUCHER_NO` bigint(14) NOT NULL DEFAULT '0',
   `VOUCHER_DT` date DEFAULT NULL,
-  `STUDENT_ID` bigint(14) NOT NULL,
-  `ROLL_NO` varchar(20) DEFAULT NULL,
-  `FACULTY_ID` smallint(6) NOT NULL,
-  `DEPT_ID` int(11) NOT NULL,
-  `PROGRAM_ID` int(11) NOT NULL,
-  `SESSION_ID` int(11) NOT NULL,
-  `SEMESTER_ID` int(11) DEFAULT NULL,
+  `AGENT_ID` int(10) NOT NULL,
+  `REQUEST_ID` int(11) NOT NULL,
   `ORG_ID` int(11) NOT NULL,
   `VCANCEL_FG` varchar(1) DEFAULT NULL,
   `REMARKS` varchar(200) DEFAULT NULL,
@@ -719,56 +725,10 @@ CREATE TABLE IF NOT EXISTS `designations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `designation_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `designation_level` int(10) unsigned NOT NULL DEFAULT '0',
   `desig_short_name` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `designations_designation_name_unique` (`designation_name`),
-  UNIQUE KEY `designations_designation_level_unique` (`designation_level`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
-
---
--- Dumping data for table `designations`
---
-
-INSERT INTO `designations` (`id`, `deleted_at`, `created_at`, `updated_at`, `designation_name`, `designation_level`, `desig_short_name`) VALUES
-(1, NULL, '2017-03-02 05:48:33', '2017-04-10 08:14:19', 'Director General', 1, 'DG'),
-(2, NULL, '2017-03-02 05:49:06', '2017-04-10 08:14:38', 'Additional Director General', 2, 'ADG'),
-(3, NULL, '2017-04-10 08:15:07', '2017-04-10 08:15:07', 'Director', 3, 'Dir'),
-(4, NULL, '2017-04-10 08:25:57', '2017-04-10 08:25:57', 'Deputy Director', 4, 'DD'),
-(5, NULL, '2017-04-12 12:17:18', '2017-04-12 12:17:18', 'Executive Engineer', 5, 'Executive Engr'),
-(6, NULL, '2017-04-12 12:17:42', '2017-04-12 12:17:42', 'System Analyst', 6, 'SA'),
-(7, NULL, '2017-04-12 12:18:07', '2017-04-12 12:18:07', 'Net Administrator', 7, 'Net Admin'),
-(8, NULL, '2017-04-12 12:18:49', '2017-04-12 12:18:49', 'Coy Commander', 8, 'Coy Cmdr'),
-(9, NULL, '2017-04-12 12:19:19', '2017-04-19 12:14:10', 'Senior Assistant Director', 9, 'Sr. AD'),
-(10, NULL, '2017-04-12 12:20:17', '2017-04-19 12:14:22', 'Senior Assistant Director (Forensic)', 10, 'Sr. AD (Forensic)'),
-(11, NULL, '2017-04-12 12:20:35', '2017-04-12 12:20:35', 'RMO', 11, 'RMO'),
-(12, NULL, '2017-04-12 12:21:20', '2017-04-12 12:21:20', 'Veterinary Surgeon', 12, 'Vet. Srgn.'),
-(13, NULL, '2017-04-12 12:21:45', '2017-04-12 12:21:45', 'Computer Programmer', 13, 'Com. Prog'),
-(14, NULL, '2017-04-12 12:22:33', '2017-04-19 12:14:40', 'Assistant Director', 14, 'AD'),
-(15, NULL, '2017-04-12 12:23:09', '2017-04-19 12:14:55', 'Assistant Director (Forensic)', 15, 'AD (Forensic)'),
-(16, NULL, '2017-04-12 12:23:28', '2017-04-12 12:23:28', 'Law Officer', 16, 'Law Officer'),
-(17, NULL, '2017-04-12 12:23:42', '2017-04-12 12:23:42', 'Budget Officer', 17, 'Budget Officer'),
-(18, NULL, '2017-04-12 12:24:11', '2017-04-12 12:24:11', 'Accounts Officer', 18, 'Accounts Officer'),
-(19, NULL, '2017-04-12 12:24:53', '2017-04-19 12:13:53', 'Deputy Assistant Director', 19, 'DAD'),
-(20, NULL, '2017-04-12 12:25:24', '2017-04-20 08:05:12', 'Sergeant/SI', 20, 'Sgt/SI'),
-(21, NULL, '2017-04-12 12:25:51', '2017-04-12 12:25:51', 'ASI/Hav', 21, 'ASI/Hav'),
-(22, NULL, '2017-04-12 12:26:13', '2017-04-12 12:26:13', 'Nayek', 22, 'NK'),
-(23, NULL, '2017-04-12 12:26:30', '2017-04-12 12:26:30', 'Constable', 23, 'Const.'),
-(24, NULL, '2017-04-12 12:26:46', '2017-04-12 12:26:46', 'Cook', 24, 'Cook'),
-(25, NULL, '2017-04-12 12:27:00', '2017-04-12 12:27:00', 'NCE', 25, 'NCE'),
-(26, NULL, '2017-04-12 12:27:45', '2017-04-12 12:27:45', 'Sub Assistant Engineer ', 26, 'Sub Asst. Engr.'),
-(27, NULL, '2017-04-12 12:28:01', '2017-04-12 12:28:01', 'RT', 27, 'RT'),
-(28, NULL, '2017-04-12 12:28:27', '2017-04-12 12:28:27', 'Mess Waiter', 28, 'Mess Waiter'),
-(29, NULL, '2017-04-12 12:28:48', '2017-04-12 12:28:48', 'MLSS', 29, 'MLSS'),
-(30, NULL, '2017-04-12 12:29:09', '2017-04-12 12:29:09', 'Accountant', 30, 'Acct'),
-(31, NULL, '2017-04-12 12:29:42', '2017-04-12 12:29:42', 'Cashier', 31, 'Cashier'),
-(32, NULL, '2017-04-12 12:29:56', '2017-04-12 12:29:56', 'Mali', 32, 'Mali'),
-(33, NULL, '2017-04-12 12:30:16', '2017-04-12 12:30:16', 'Technician', 33, 'Technician'),
-(34, NULL, '2017-04-12 12:30:35', '2017-04-12 12:30:35', 'Lab Assistant', 34, 'Lab Asst'),
-(35, NULL, '2017-04-12 12:31:16', '2017-04-12 12:31:16', 'Office Assistant', 35, 'Office Asst'),
-(36, NULL, '2017-04-12 12:31:32', '2017-04-12 12:31:32', 'Ward Boy', 37, 'Ward Boy'),
-(37, NULL, '2017-04-12 12:31:49', '2017-04-12 12:31:49', 'Mosalcy', 38, 'Mosalcy'),
-(38, NULL, '2017-04-12 12:32:24', '2017-04-12 12:32:24', 'Dom/Sweeper', 39, 'Dom/Sweeper');
+  UNIQUE KEY `designations_designation_name_unique` (`designation_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -966,19 +926,19 @@ CREATE TABLE IF NOT EXISTS `la_configs` (
 --
 
 INSERT INTO `la_configs` (`id`, `key`, `section`, `value`, `created_at`, `updated_at`) VALUES
-(1, 'sitename', '', 'SHAMIM TRAVELS', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(2, 'sitename_part1', '', 'SHAMIM', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(3, 'sitename_part2', '', 'TRAVELS', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(4, 'sitename_short', '', 'SM', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(5, 'site_description', '', 'Shamim Travels', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(6, 'sidebar_search', '', '0', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(7, 'show_messages', '', '0', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(8, 'show_notifications', '', '1', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(9, 'show_tasks', '', '0', '2017-02-18 20:35:04', '2017-12-04 15:17:59'),
-(10, 'show_rightsidebar', '', '0', '2017-02-18 20:35:05', '2017-12-04 15:17:59'),
-(11, 'skin', '', 'skin-white', '2017-02-18 20:35:05', '2017-12-04 15:17:59'),
-(12, 'layout', '', 'fixed', '2017-02-18 20:35:05', '2017-12-04 15:17:59'),
-(13, 'default_email', '', 'test@example.com', '2017-02-18 20:35:05', '2017-12-04 15:17:59');
+(1, 'sitename', '', 'SHAMIM TRAVELS', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(2, 'sitename_part1', '', 'SHAMIM', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(3, 'sitename_part2', '', 'TRAVELS', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(4, 'sitename_short', '', 'SM', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(5, 'site_description', '', 'Shamim Travels', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(6, 'sidebar_search', '', '0', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(7, 'show_messages', '', '0', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(8, 'show_notifications', '', '0', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(9, 'show_tasks', '', '0', '2017-02-18 20:35:04', '2017-12-22 13:27:54'),
+(10, 'show_rightsidebar', '', '0', '2017-02-18 20:35:05', '2017-12-22 13:27:54'),
+(11, 'skin', '', 'skin-white', '2017-02-18 20:35:05', '2017-12-22 13:27:54'),
+(12, 'layout', '', 'fixed', '2017-02-18 20:35:05', '2017-12-22 13:27:54'),
+(13, 'default_email', '', 'test@example.com', '2017-02-18 20:35:05', '2017-12-22 13:27:54');
 
 -- --------------------------------------------------------
 
@@ -998,7 +958,7 @@ CREATE TABLE IF NOT EXISTS `la_menus` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=279 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=281 ;
 
 --
 -- Dumping data for table `la_menus`
@@ -1014,40 +974,25 @@ INSERT INTO `la_menus` (`id`, `name`, `url`, `icon`, `type`, `parent`, `hierarch
 (7, 'Organizations', 'organizations', 'fa-university', 'module', 32, 3, '2017-02-18 20:35:02', '2017-03-11 03:33:56'),
 (8, 'Permissions', 'permissions', 'fa-magic', 'module', 32, 6, '2017-02-18 20:35:02', '2017-05-11 01:01:59'),
 (10, 'Settings', '#', 'fa-cogs', 'custom', 0, 1, '2017-02-26 21:05:33', '2017-10-08 01:27:14'),
-(11, 'Divisions', 'divisions', 'fa-angle-double-right', 'module', 37, 20, '2017-02-26 21:05:40', '2017-07-22 06:40:55'),
-(13, 'Districts', 'districts', 'fa-angle-double-right', 'module', 37, 21, '2017-02-26 21:14:23', '2017-07-22 06:40:55'),
-(14, 'Upazillas', 'upazillas', 'fa fa-angle-double-right', 'module', 37, 22, '2017-02-26 21:25:26', '2017-07-22 06:40:55'),
-(25, 'Designations', 'designations', 'fa fa-angle-double-right', 'module', 37, 16, '2017-03-01 23:40:19', '2017-07-22 06:40:55'),
-(29, 'Payroll', '#', 'fa-bank', 'custom', 0, 3, '2017-03-03 20:55:50', '2017-10-08 01:27:15'),
+(11, 'Divisions', 'divisions', 'fa-angle-double-right', 'module', 37, 6, '2017-02-26 21:05:40', '2017-12-22 14:37:23'),
+(13, 'Districts', 'districts', 'fa-angle-double-right', 'module', 37, 7, '2017-02-26 21:14:23', '2017-12-22 14:37:23'),
+(14, 'Upazillas', 'upazillas', 'fa fa-angle-double-right', 'module', 37, 8, '2017-02-26 21:25:26', '2017-12-22 14:37:23'),
 (30, 'Role_Users', 'role_users', 'fa fa-angle-double-right', 'module', 37, 3, '2017-03-03 21:03:57', '2017-05-09 05:42:23'),
-(32, 'Test', '#', 'fa-cube', 'custom', 0, 6, '2017-03-04 17:46:25', '2017-11-06 03:32:52'),
+(32, 'Test', '#', 'fa-cube', 'custom', 0, 3, '2017-03-04 17:46:25', '2017-12-22 14:37:23'),
 (33, 'Test 1', 'testController', 'fa-angle-double-right', 'custom', 32, 1, '2017-03-04 17:46:58', '2017-03-04 17:48:01'),
 (35, 'Menu Permissions', 'menu_permissions', 'fa-angle-double-right', 'custom', 37, 4, '2017-03-05 16:39:34', '2017-05-09 05:42:23'),
 (37, 'Admin_Settings', '#', 'fa-key', 'custom', 10, 1, '2017-03-06 16:58:30', '2017-10-08 01:27:14'),
-(51, 'Payroll Settings', '#', 'fa-cog', 'custom', 10, 3, '2017-03-06 18:06:30', '2017-10-08 01:27:15'),
 (54, 'HRM', '#', 'fa-group', 'custom', 0, 2, '2017-03-11 03:16:59', '2017-10-08 01:27:15'),
-(57, 'Countries', 'countries', 'fa fa-angle-double-right', 'module', 37, 18, '2017-03-11 03:49:10', '2017-07-22 06:40:55'),
-(58, 'Banks', 'banks', 'fa fa-angle-double-right', 'module', 37, 23, '2017-03-11 04:49:17', '2017-07-22 06:40:55'),
-(59, 'Bank_Branches', 'bank_branches', 'fa fa-angle-double-right', 'module', 37, 24, '2017-03-11 06:32:51', '2017-07-22 06:40:55'),
-(60, 'Leave_Types', 'leave_types', 'fa fa-angle-double-right', 'module', 1, 1, '2017-03-12 02:52:16', '2017-03-12 02:52:33'),
+(57, 'Countries', 'countries', 'fa fa-angle-double-right', 'module', 37, 5, '2017-03-11 03:49:10', '2017-12-22 14:37:22'),
+(58, 'Banks', 'banks', 'fa fa-angle-double-right', 'module', 37, 9, '2017-03-11 04:49:17', '2017-12-22 14:37:23'),
+(59, 'Bank_Branches', 'bank_branches', 'fa fa-angle-double-right', 'module', 37, 10, '2017-03-11 06:32:51', '2017-12-22 14:37:23'),
 (88, 'Basic_Informations', 'basic_informations', 'fa fa-angle-double-right', 'module', 70, 13, '2017-03-22 22:16:13', '2017-08-08 23:06:37'),
 (96, 'Leaves', 'leaves', 'fa fa-angle-double-right', 'module', 112, 3, '2017-04-01 03:56:35', '2017-04-05 21:46:09'),
 (103, 'Increment_Infos', 'increment_infos', 'fa fa-angle-double-right', 'module', 70, 27, '2017-04-01 23:27:08', '2017-08-08 23:06:37'),
 (105, 'Daily_Attendences', 'daily_attendences', 'fa fa-angle-double-right', 'module', 112, 1, '2017-04-02 03:41:12', '2017-04-02 21:43:50'),
 (122, 'Bank_Accounts', 'bank_accounts', 'fa fa-angle-double-right', 'module', 70, 34, '2017-04-08 05:44:12', '2017-08-08 23:06:37'),
-(259, 'Payroll_Types', 'payroll_types', 'fa fa-angle-double-right', 'module', 51, 1, '2017-08-23 03:13:52', '2017-08-23 03:14:12'),
-(260, 'Payroll_Heads', 'payroll_heads', 'fa fa-angle-double-right', 'module', 51, 2, '2017-08-23 03:36:52', '2017-08-23 03:37:14'),
-(263, 'Salary_Policy', 'payroll/salary_policy', 'fa-angle-double-right', 'custom', 29, 1, '2017-09-09 03:37:20', '2017-09-09 03:57:21'),
-(266, 'Payroll_Allowances', 'payroll_allowances', 'fa fa-angle-double-right', 'module', 51, 4, '2017-09-14 04:50:54', '2017-09-20 02:40:22'),
-(267, 'Pay_Scales', 'payroll/pay_scales', 'fa-angle-double-right', 'custom', 51, 3, '2017-09-16 03:51:17', '2017-09-20 02:40:22'),
-(268, 'regular_salary_est_afd', 'payroll/regular_salary_est_afd', 'fa-angle-double-right', 'custom', 29, 4, '2017-09-18 23:40:56', '2017-11-16 03:59:39'),
-(269, 'Payroll_Deductions', 'payroll_deductions', 'fa-angle-double-right', 'custom', 51, 5, '2017-09-20 02:40:03', '2017-09-20 02:40:22'),
-(270, 'Payroll_Hrm', 'payroll_hrm', 'fa-angle-double-right', 'custom', 29, 2, '2017-09-21 02:48:02', '2017-09-21 02:49:05'),
-(271, 'regular_salary_est_police', 'payroll/regular_salary_est_police', 'fa-angle-double-right', 'custom', 29, 5, '2017-09-22 23:17:35', '2017-11-16 03:59:39'),
-(274, 'Salary_Process', 'salary_process', 'fa-angle-double-right', 'custom', 29, 3, '2017-10-03 00:10:42', '2017-10-03 00:11:45'),
-(276, 'Payroll_5221', 'payroll_5221', 'fa-angle-double-right', 'custom', 277, 2, '2017-11-06 03:32:11', '2017-11-16 03:59:39'),
-(277, 'Payroll_Reports', '#', 'fa-bar-chart-o', 'custom', 29, 6, '2017-11-06 03:35:12', '2017-11-16 03:59:39'),
-(278, 'Regular_Salary_Sheet', 'payroll/regular_salary_sheet', 'fa-angle-double-right', 'custom', 277, 3, '2017-11-09 02:40:25', '2017-11-16 03:59:39');
+(279, 'Designations', 'designations', 'fa-angle-double-right', 'module', 37, 11, '2017-12-22 14:37:15', '2017-12-22 14:37:23'),
+(280, 'Agent_Info', 'agent_info', 'fa-user', 'custom', 37, 12, '2017-12-25 06:01:29', '2017-12-25 06:01:50');
 
 -- --------------------------------------------------------
 
@@ -1103,7 +1048,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=118 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=76 ;
 
 --
 -- Dumping data for table `modules`
@@ -1126,13 +1071,9 @@ INSERT INTO `modules` (`id`, `name`, `label`, `name_db`, `view_col`, `model`, `c
 (27, 'Countries', 'Countries', 'countries', 'country_name', 'Country', 'CountriesController', 'fa-angle-double-right', 1, '2017-03-11 09:45:59', '2017-03-11 09:49:11'),
 (28, 'Banks', 'Banks', 'banks', 'bank_name', 'Bank', 'BanksController', 'fa-angle-double-right', 1, '2017-03-11 10:44:31', '2017-03-11 10:49:17'),
 (29, 'Bank_Branches', 'Bank_Branches', 'bank_branches', 'bank_branch_name', 'Bank_Branch', 'Bank_BranchesController', 'fa-angle-double-right', 1, '2017-03-11 12:19:26', '2017-03-11 12:32:52'),
-(30, 'Leave_Types', 'Leave_Types', 'leave_types', 'leave_type', 'Leave_Type', 'Leave_TypesController', 'fa-angle-double-right', 1, '2017-03-12 08:49:21', '2017-03-12 08:52:16'),
 (44, 'Basic_Informations', 'Basic_Informations', 'basic_informations', 'nationality', 'Basic_Information', 'Basic_InformationsController', 'fa-angle-double-right', 1, '2017-03-23 03:55:00', '2017-03-23 04:16:13'),
 (61, 'Attendence_Statuses', 'Attendence_Statuses', 'attendence_statuses', 'attend_status', 'Attendence_Status', 'Attendence_StatusesController', 'fa-angle-double-right', 1, '2017-04-02 08:14:26', '2017-04-02 08:18:08'),
-(75, 'Bank_Accounts', 'Bank_Accounts', 'bank_accounts', 'bank_acc_no', 'Bank_Account', 'Bank_AccountsController', 'fa-angle-double-right', 1, '2017-04-08 11:34:55', '2017-04-08 11:44:12'),
-(114, 'Payroll_Types', 'Payroll_Types', 'payroll_types', 'name', 'Payroll_Type', 'Payroll_TypesController', 'fa-angle-double-right', 1, '2017-08-23 09:12:18', '2017-08-23 09:13:52'),
-(116, 'Payroll_Heads', 'Payroll_Heads', 'payroll_heads', 'name', 'Payroll_Head', 'Payroll_HeadsController', 'fa-angle-double-right', 1, '2017-08-23 09:33:19', '2017-08-23 09:36:52'),
-(117, 'Payroll_Allowances', 'Payroll_Allowances', 'payroll_allowances', 'allowance_name', 'Payroll_Allowance', 'Payroll_AllowancesController', 'fa-angle-double-right', 1, '2017-09-14 10:34:18', '2017-09-14 10:50:55');
+(75, 'Bank_Accounts', 'Bank_Accounts', 'bank_accounts', 'bank_acc_no', 'Bank_Account', 'Bank_AccountsController', 'fa-angle-double-right', 1, '2017-04-08 11:34:55', '2017-04-08 11:44:12');
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1162,6 @@ INSERT INTO `module_fields` (`id`, `colname`, `label`, `module`, `field_type`, `
 (57, 'district_id', 'District', 11, 7, 0, '', 0, 0, 1, '@districts', 0, '2017-02-27 03:23:45', '2017-02-27 03:23:45'),
 (58, 'upazilla_name', 'Name', 11, 19, 1, NULL, 0, 255, 1, '', 0, '2017-02-27 03:25:10', '2017-04-04 05:47:56'),
 (131, 'designation_name', 'Name', 19, 19, 1, NULL, 0, 255, 1, '', 1, '2017-03-02 05:32:54', '2017-03-02 05:32:54'),
-(132, 'designation_level', 'Level', 19, 13, 1, NULL, 1, 11, 1, '', 3, '2017-03-02 05:39:57', '2017-03-02 05:40:07'),
 (157, 'user_id', 'User', 24, 7, 0, NULL, 0, 0, 0, '@users', 0, '2017-03-04 03:03:01', '2017-03-04 03:03:01'),
 (158, 'role_id', 'Role', 24, 7, 0, NULL, 0, 0, 0, '@roles', 0, '2017-03-04 03:03:49', '2017-03-04 03:15:57'),
 (166, 'country_name', 'Name', 27, 19, 1, NULL, 0, 255, 1, '', 0, '2017-03-11 09:46:51', '2017-03-11 09:46:51'),
@@ -1239,9 +1179,6 @@ INSERT INTO `module_fields` (`id`, `colname`, `label`, `module`, `field_type`, `
 (178, 'bank_branch_cell', 'Cell No.', 29, 19, 1, NULL, 0, 20, 0, '', 0, '2017-03-11 12:31:38', '2017-03-11 12:31:38'),
 (179, 'bank_branch_mobile', 'Mobile No.', 29, 19, 1, NULL, 0, 20, 0, '', 0, '2017-03-11 12:32:06', '2017-03-11 12:32:06'),
 (180, 'bank_branch_email', 'E-mail', 29, 19, 0, NULL, 0, 100, 0, '', 0, '2017-03-11 12:32:33', '2017-03-11 12:32:33'),
-(181, 'leave_type', 'Leave Type', 30, 19, 1, NULL, 0, 50, 1, '', 0, '2017-03-12 08:49:56', '2017-03-12 09:10:10'),
-(182, 'ltype_short', 'Short Code', 30, 19, 0, NULL, 0, 5, 0, '', 0, '2017-03-12 08:50:35', '2017-03-12 08:50:35'),
-(183, 'is_service_book', 'Added Service Book?', 30, 18, 0, NULL, 0, 0, 0, '["Yes","No"]', 0, '2017-03-12 08:52:04', '2017-03-12 08:52:04'),
 (238, 'user_name', 'User Name', 1, 19, 0, NULL, 0, 100, 0, '', 0, '2017-03-22 12:12:31', '2017-03-22 12:12:31'),
 (239, 'emp_id', 'RAB ID', 44, 7, 0, NULL, 0, 0, 1, '@employees_info', 0, '2017-03-23 03:58:20', '2017-03-23 03:58:20'),
 (240, 'nationality', 'Nationality', 44, 22, 0, NULL, 0, 256, 0, '', 0, '2017-03-23 03:59:48', '2017-03-23 03:59:48'),
@@ -1359,543 +1296,6 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 ('akebulr@gmail.com', '39db44802e4c1be71e762d2354d9408d59b39333f03fdce27fb3550c8bb76323', '2017-03-10 23:23:38');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_allowances`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_allowances` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `allowance_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=fixed,2=percentage',
-  `payroll_head_id` int(10) unsigned NOT NULL DEFAULT '1',
-  `salary_head_id` int(10) unsigned DEFAULT NULL,
-  `allowance_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `allowance_max_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `allowance_min_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `time_interval` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=monthly,2=daily,3=weekly,4=Quarterly',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `payroll_allowances_allowance_name_unique` (`allowance_name`),
-  KEY `payroll_allowances_payroll_head_id_foreign` (`payroll_head_id`),
-  KEY `salary_head_id` (`salary_head_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
-
---
--- Dumping data for table `payroll_allowances`
---
-
-INSERT INTO `payroll_allowances` (`id`, `deleted_at`, `created_at`, `updated_at`, `allowance_name`, `type`, `payroll_head_id`, `salary_head_id`, `allowance_amount`, `allowance_max_amount`, `allowance_min_amount`, `time_interval`) VALUES
-(15, NULL, '2017-10-25 22:54:17', '2017-10-25 22:54:17', 'বাড়ীভাড়া ভাতা', 2, 2, 1, 40.00, 0.00, 0.00, 1),
-(16, NULL, '2017-10-25 22:57:16', '2017-10-26 04:07:10', 'চিকিৎসা ভাতা', 1, 20, NULL, 1500.00, 0.00, 0.00, 1),
-(17, NULL, '2017-10-26 01:23:16', '2017-10-26 01:23:16', 'মহার্ঘ ভাতা', 1, 12, NULL, 2604.00, 0.00, 0.00, 1),
-(18, NULL, '2017-10-26 01:24:04', '2017-10-26 01:24:04', 'যাতায়াত ভাতা', 1, 11, NULL, 150.00, 0.00, 0.00, 1),
-(19, NULL, '2017-10-26 03:58:07', '2017-10-26 03:58:07', 'ক্ষৌর ও ধৌত ভাতা ', 1, 22, NULL, 490.00, 0.00, 0.00, 1),
-(20, NULL, '2017-10-26 04:00:32', '2017-10-26 04:00:32', 'ব্যাটম্যান ভাতা', 2, 22, 1, 20.00, 0.00, 0.00, 1),
-(21, NULL, '2017-10-26 04:01:28', '2017-10-26 04:01:28', 'প্রতিরক্ষা ভাতা', 2, 22, 1, 10.00, 0.00, 0.00, 1),
-(22, NULL, '2017-10-26 04:02:20', '2017-10-26 04:02:20', 'দক্ষতা ভাতা', 2, 22, 1, 15.00, 0.00, 0.00, 1),
-(23, NULL, '2017-10-26 04:02:44', '2017-10-26 04:02:44', 'সুআচরণ ভাতা', 2, 22, 1, 5.00, 0.00, 0.00, 1),
-(24, NULL, '2017-10-26 04:05:02', '2017-10-26 04:05:02', 'র‍্যাব ভাতা', 2, 22, 1, 25.00, 0.00, 0.00, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_deductions`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_deductions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deduction_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=fixed,2=percentage',
-  `payroll_head_id` int(10) unsigned NOT NULL DEFAULT '1',
-  `salary_head_id` int(10) unsigned DEFAULT NULL COMMENT 'allowance_id,0=basic',
-  `deduction_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `deduction_max_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `deduction_min_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `time_interval` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=monthly,2=daily,3=weekly,4=Quarterly',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `payroll_deductions_deduction_name_unique` (`deduction_name`),
-  KEY `payroll_deductions_payroll_head_id_foreign` (`payroll_head_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `payroll_deductions`
---
-
-INSERT INTO `payroll_deductions` (`id`, `deleted_at`, `created_at`, `updated_at`, `deduction_name`, `type`, `payroll_head_id`, `salary_head_id`, `deduction_amount`, `deduction_max_amount`, `deduction_min_amount`, `time_interval`) VALUES
-(1, '2017-11-06 03:46:31', '2017-10-26 04:33:41', '2017-10-26 04:33:41', 'সাধারণ ভবিষ্য তহবিল', 1, 19, NULL, 500.00, 0.00, 0.00, 1),
-(2, NULL, '2017-10-26 04:48:31', '2017-11-01 02:28:35', 'বাড়ীভাড়া', 2, 23, 0, 40.00, 0.00, 0.00, 1),
-(3, NULL, '2017-10-26 04:50:30', '2017-10-26 04:50:30', 'গ্যাস', 1, 6, NULL, 950.00, 0.00, 0.00, 1),
-(4, NULL, '2017-10-26 04:51:02', '2017-10-26 04:51:02', 'পানি ও পয়ঃপ্রনালী', 1, 5, NULL, 500.00, 0.00, 0.00, 1),
-(5, NULL, '2017-11-01 03:30:29', '2017-11-01 03:31:57', 'মোটর সাইকেলের  অগ্রিমের কিস্তি পরিশোধ', 2, 7, 15, 10.00, 0.00, 0.00, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_heads`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_heads` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `payroll_type` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '1=earning,2=deduction,3=Taxation,4=festival earning',
-  `salary_head` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=salary head,0=not salary head',
-  `code` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `payroll_heads_payroll_type_foreign` (`payroll_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
-
---
--- Dumping data for table `payroll_heads`
---
-
-INSERT INTO `payroll_heads` (`id`, `deleted_at`, `created_at`, `updated_at`, `name`, `payroll_type`, `salary_head`, `code`) VALUES
-(1, NULL, '2017-08-23 03:47:57', '2017-10-26 04:52:23', 'মূল বেতন', 1, 1, '৪৬০১'),
-(2, NULL, '2017-08-23 03:48:20', '2017-10-26 02:45:10', 'বাড়ীভাড়া  ভাতা', 1, 1, '৪৭০৫'),
-(3, NULL, '2017-08-23 03:48:46', '2017-10-26 04:13:54', 'মোটর গাড়ীর  অগ্রিমের কিস্তি পরিশোধ', 2, 0, '১-০৯৬৫-০০০১-৩৯১১'),
-(4, NULL, '2017-08-23 03:49:05', '2017-10-26 04:13:03', 'গৃহ নির্মাণ অগ্রিমের কিস্তি পরিশোধ', 2, 0, '১-০৯৬৫-০০০১-৩৯০১'),
-(5, NULL, '2017-08-23 03:49:24', '2017-10-26 02:58:47', 'পানি ও পয়ঃপ্রনালী ', 2, 0, '১-৩২৩৭-০০১-২১২৩'),
-(6, NULL, '2017-08-23 03:51:39', '2017-10-26 02:58:19', 'গ্যাস', 2, 0, '১-৩২৩৭-০০১-২১১৫'),
-(7, NULL, '2017-08-23 03:52:26', '2017-10-26 04:15:05', 'মোটর সাইকেলের  অগ্রিমের কিস্তি পরিশোধ', 2, 0, '১-০৯৬৫-০০০১-৩৯২১'),
-(8, NULL, '2017-09-14 03:18:33', '2017-10-26 04:15:43', 'বাই সাইকেলের  অগ্রিমের কিস্তি পরিশোধ', 2, 0, '১-০৯৬৫-০০০১-৩৯৩১'),
-(9, NULL, '2017-09-20 03:24:34', '2017-10-26 04:16:28', 'করমচারিদেরকে প্রদত্ত ঋণের সুদ পরিশোধ', 2, 0, '১-০৯৬৫-০০০১-১৬৩১'),
-(10, NULL, '2017-09-20 03:25:12', '2017-10-26 04:16:56', 'জরিমানা ও দণ্ড ', 2, 0, '১-২২১১-০০০০-১৯০১'),
-(11, NULL, '2017-10-25 23:08:22', '2017-10-26 04:12:06', 'যাতায়াত  ভাতা', 1, 0, '৪৭৬৫'),
-(12, NULL, '2017-10-26 01:21:55', '2017-10-26 02:44:48', 'মহার্ঘ ভাতা', 1, 0, '৪৭০১'),
-(13, NULL, '2017-10-26 01:32:31', '2017-10-26 04:11:34', 'পৌরকর কর্তন', 2, 0, '১-৩২৩৭-০০০০-২১২৭'),
-(14, NULL, '2017-10-26 01:33:46', '2017-10-26 04:11:01', 'অতিরিক্ত গৃহীত কর্তন', 2, 0, '১-২২১১-০০০০-২৬৭১'),
-(15, NULL, '2017-10-26 01:34:21', '2017-10-26 02:47:22', 'শিক্ষা ভাতা', 1, 0, '৪৭৭৩'),
-(16, NULL, '2017-10-26 01:34:49', '2017-10-26 04:10:12', 'ডাক জীবন বীমা কিস্তি', 2, 0, '৬-৫৪৩১-০০০০-৮০৪১'),
-(17, NULL, '2017-10-26 02:12:47', '2017-10-26 04:09:33', 'সরকারি কর্মচারীগণের গোষ্ঠী বীমা', 2, 0, '৬-০৭৭১-০০০১-৮২৪৬'),
-(18, NULL, '2017-10-26 02:21:32', '2017-10-26 04:09:02', 'সরকারি কর্মচারীগণের কল্যাণ তহবিল', 2, 0, '৬-০৭৭১-০০০১-৮২৪১'),
-(19, NULL, '2017-10-26 02:22:09', '2017-10-26 04:08:30', 'সাধারণ ভবিষ্যৎ তহবিল', 2, 0, '৬-০৯৩৭-০০০০-৮১০১'),
-(20, NULL, '2017-10-26 02:46:26', '2017-10-26 02:46:26', 'চিকিৎসা ভাতা', 1, 0, '৪৭১৭'),
-(21, NULL, '2017-10-26 02:47:05', '2017-10-26 02:47:05', 'টিফিন ভাতা', 1, 0, '৪৭৫৫'),
-(22, NULL, '2017-10-26 02:48:33', '2017-10-26 03:08:50', 'অন্যান্য ভাতা', 1, 0, '৪৭৯৫'),
-(23, NULL, '2017-10-26 02:56:46', '2017-10-26 02:56:46', 'বাড়ীভাড়া', 2, 0, '১-৩২৩৭-০০১২১১১');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_hrm`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_hrm` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `emp_id` int(11) NOT NULL,
-  `pay_scale_id` int(10) unsigned NOT NULL,
-  `basic_salary` decimal(10,2) NOT NULL,
-  `effective_date` date NOT NULL,
-  `end_date` date DEFAULT NULL,
-  `payroll_hrm_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=edit disable,1=edit enable',
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `emp_id` (`emp_id`),
-  KEY `pay_scale_id` (`pay_scale_id`),
-  KEY `created_by` (`created_by`),
-  KEY `updated_by` (`updated_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `payroll_hrm`
---
-
-INSERT INTO `payroll_hrm` (`id`, `emp_id`, `pay_scale_id`, `basic_salary`, `effective_date`, `end_date`, `payroll_hrm_status`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 10151, 1, 22000.00, '2017-10-01', NULL, 1, 1, 1, '2017-10-29 22:27:32', '2017-10-29 22:28:29', NULL),
-(2, 1, 2, 35500.00, '2017-10-15', NULL, 1, 1, 1, '2017-10-29 22:32:01', '2017-10-30 04:21:58', NULL),
-(3, 10143, 5, 16000.00, '2017-08-10', NULL, 1, 1, 1, '2017-10-29 22:37:34', '2017-10-29 22:39:02', NULL),
-(4, 1, 1, 22000.00, '2017-03-03', '2017-10-14', 0, 1, NULL, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_hrm_details`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_hrm_details` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `payroll_hrm_id` int(10) unsigned NOT NULL,
-  `payroll_allowance_id` int(10) unsigned DEFAULT NULL,
-  `payroll_deduction_id` int(10) unsigned DEFAULT NULL,
-  `payroll_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=allowance,2=deduction',
-  `effective_from_date` date DEFAULT NULL,
-  `effective_to_date` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=active,2=Inactive',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `payroll_hrm_id` (`payroll_hrm_id`),
-  KEY `payroll_allowance_id` (`payroll_allowance_id`),
-  KEY `payroll_deduction_id` (`payroll_deduction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
-
---
--- Dumping data for table `payroll_hrm_details`
---
-
-INSERT INTO `payroll_hrm_details` (`id`, `payroll_hrm_id`, `payroll_allowance_id`, `payroll_deduction_id`, `payroll_type`, `effective_from_date`, `effective_to_date`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 17, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(2, 1, 15, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(3, 1, 16, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(4, 1, 23, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(5, 1, 19, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(6, 1, 24, NULL, 1, NULL, NULL, 1, '2017-10-29 22:27:32', '2017-10-29 22:27:32', NULL),
-(7, 1, NULL, 3, 2, NULL, NULL, 1, '2017-10-29 22:28:29', '2017-10-29 22:28:29', NULL),
-(8, 1, NULL, 4, 2, NULL, NULL, 1, '2017-10-29 22:28:29', '2017-10-29 22:28:29', NULL),
-(9, 2, 15, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(10, 2, 16, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(11, 2, 19, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(12, 2, 18, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(13, 2, 17, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(14, 2, 20, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(15, 2, 22, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(16, 2, 24, NULL, 1, NULL, NULL, 1, '2017-10-29 22:32:01', '2017-10-29 22:32:01', NULL),
-(17, 2, NULL, 3, 2, '2017-11-04', '2017-11-10', 1, '2017-10-29 22:32:01', '2017-10-30 04:21:59', NULL),
-(18, 3, 16, NULL, 1, '2017-10-10', '2017-10-15', 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(19, 3, 17, NULL, 1, NULL, NULL, 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(20, 3, 18, NULL, 1, '2017-10-17', '2017-10-20', 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(21, 3, 19, NULL, 1, NULL, NULL, 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(22, 3, 20, NULL, 1, NULL, NULL, 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(23, 3, 22, NULL, 1, NULL, NULL, 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(24, 3, NULL, 1, 2, NULL, NULL, 1, '2017-10-29 22:37:34', '2017-10-29 22:37:34', NULL),
-(25, 3, NULL, 2, 2, '2017-11-01', '2017-11-20', 1, '2017-10-29 22:37:34', '2017-11-03 23:57:55', '2017-11-03 23:57:55'),
-(26, 3, 15, NULL, 1, NULL, NULL, 1, '2017-10-30 23:54:42', '2017-10-30 23:54:42', NULL),
-(27, 4, 15, NULL, 1, NULL, NULL, 1, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL),
-(28, 4, 17, NULL, 1, NULL, NULL, 1, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL),
-(29, 4, 21, NULL, 1, NULL, NULL, 1, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL),
-(30, 4, NULL, 3, 2, NULL, NULL, 1, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL),
-(31, 4, NULL, 4, 2, NULL, NULL, 1, '2017-10-31 00:45:45', '2017-10-31 00:45:45', NULL),
-(32, 3, NULL, 2, 2, '2017-11-14', '2017-11-20', 1, '2017-11-04 00:27:15', '2017-11-04 00:27:15', NULL),
-(33, 2, NULL, 4, 2, NULL, NULL, 1, '2017-11-04 03:00:11', '2017-11-04 03:00:11', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_pay_scales`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_pay_scales` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pay_scale_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `payroll_head_id` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'Basic',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `payroll_head_id` (`payroll_head_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `payroll_pay_scales`
---
-
-INSERT INTO `payroll_pay_scales` (`id`, `pay_scale_name`, `payroll_head_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '22000-53060', 1, '2017-10-29 22:15:46', '2017-10-29 22:19:08', NULL),
-(2, '35500-67000', 1, '2017-10-29 22:17:34', '2017-10-29 22:17:34', NULL),
-(3, '43000-69850', 1, '2017-10-29 22:18:27', '2017-10-29 22:18:27', NULL),
-(4, '56500-74400', 1, '2017-10-29 22:19:45', '2017-10-29 22:19:45', NULL),
-(5, '16000-38640', 1, '2017-10-29 22:20:10', '2017-10-29 22:20:10', NULL),
-(6, '12500-30230', 1, '2017-10-29 22:20:48', '2017-10-29 22:20:48', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_pay_scale_details`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_pay_scale_details` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pay_scale_id` int(10) unsigned NOT NULL,
-  `pay_scale_year` tinyint(4) NOT NULL COMMENT '1=1st,2=2nd,3=3rd,4=4th....',
-  `pay_scale_amount` decimal(10,2) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pay_scale_id` (`pay_scale_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
-
---
--- Dumping data for table `payroll_pay_scale_details`
---
-
-INSERT INTO `payroll_pay_scale_details` (`id`, `pay_scale_id`, `pay_scale_year`, `pay_scale_amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 22000.00, '2017-10-29 22:15:46', '2017-10-29 22:19:08', '2017-10-29 22:19:08'),
-(2, 2, 1, 35500.00, '2017-10-29 22:17:34', '2017-10-29 22:17:34', NULL),
-(3, 3, 1, 43000.00, '2017-10-29 22:18:27', '2017-10-29 22:18:27', NULL),
-(4, 1, 1, 22000.00, '2017-10-29 22:19:08', '2017-10-29 22:19:08', NULL),
-(5, 4, 1, 56500.00, '2017-10-29 22:19:45', '2017-10-29 22:19:45', NULL),
-(6, 5, 1, 16000.00, '2017-10-29 22:20:10', '2017-10-29 22:20:10', NULL),
-(7, 6, 1, 12500.00, '2017-10-29 22:20:48', '2017-10-29 22:20:48', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_policy`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_policy` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `policy_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `policy_type` tinyint(4) NOT NULL COMMENT '1=salary policy',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `policy_name` (`policy_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
-
---
--- Dumping data for table `payroll_policy`
---
-
-INSERT INTO `payroll_policy` (`id`, `policy_name`, `policy_type`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(13, '10th grade', 1, '2017-09-13 05:06:17', '2017-09-13 05:06:17', NULL),
-(14, '9th', 1, '2017-09-13 05:13:56', '2017-09-13 05:29:09', NULL),
-(15, 'asdfasf', 1, '2017-09-13 05:56:32', '2017-09-13 05:56:32', NULL),
-(16, '9700 dhaka city', 1, '2017-09-14 00:32:24', '2017-09-14 00:32:24', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_policy_details`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_policy_details` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `policy_id` int(10) unsigned NOT NULL,
-  `payroll_head` int(10) unsigned NOT NULL,
-  `salary_head` int(10) unsigned DEFAULT NULL,
-  `type` tinyint(4) NOT NULL COMMENT '1=Fixed,2=Percentage',
-  `amount` decimal(10,2) DEFAULT NULL,
-  `salary_amount` decimal(10,2) NOT NULL COMMENT 'update by process',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `policy_id` (`policy_id`),
-  KEY `payroll_head` (`payroll_head`),
-  KEY `salary_head` (`salary_head`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=53 ;
-
---
--- Dumping data for table `payroll_policy_details`
---
-
-INSERT INTO `payroll_policy_details` (`id`, `policy_id`, `payroll_head`, `salary_head`, `type`, `amount`, `salary_amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 13, 2, 1, 2, 10.00, 2000.00, '2017-09-13 05:06:17', '2017-09-13 05:11:09', '2017-09-13 05:11:09'),
-(2, 13, 1, NULL, 1, 20000.00, 20000.00, '2017-09-13 05:06:17', '2017-09-13 05:11:10', '2017-09-13 05:11:10'),
-(3, 13, 2, 1, 2, 10.00, 2000.00, '2017-09-13 05:11:10', '2017-09-13 05:11:10', NULL),
-(4, 13, 1, NULL, 1, 20000.00, 20000.00, '2017-09-13 05:11:10', '2017-09-13 05:11:10', NULL),
-(5, 13, 3, 2, 2, 5.00, 100.00, '2017-09-13 05:11:10', '2017-09-13 05:11:10', NULL),
-(6, 14, 1, 1, 2, 15000.00, 0.00, '2017-09-13 05:13:56', '2017-09-13 05:14:26', '2017-09-13 05:14:26'),
-(7, 14, 2, 3, 2, 10.00, 0.00, '2017-09-13 05:13:56', '2017-09-13 05:14:26', '2017-09-13 05:14:26'),
-(8, 14, 3, 2, 2, 5.00, 0.00, '2017-09-13 05:13:56', '2017-09-13 05:14:26', '2017-09-13 05:14:26'),
-(9, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:14:26', '2017-09-13 05:15:19', '2017-09-13 05:15:19'),
-(10, 14, 2, 3, 2, 10.00, 0.00, '2017-09-13 05:14:27', '2017-09-13 05:15:19', '2017-09-13 05:15:19'),
-(11, 14, 3, 2, 2, 5.00, 0.00, '2017-09-13 05:14:27', '2017-09-13 05:15:19', '2017-09-13 05:15:19'),
-(12, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:15:19', '2017-09-13 05:15:36', '2017-09-13 05:15:36'),
-(13, 14, 2, 3, 2, 10.00, 0.00, '2017-09-13 05:15:19', '2017-09-13 05:15:36', '2017-09-13 05:15:36'),
-(14, 14, 3, 2, 2, 5.00, 0.00, '2017-09-13 05:15:19', '2017-09-13 05:15:36', '2017-09-13 05:15:36'),
-(15, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:15:19', '2017-09-13 05:15:36', '2017-09-13 05:15:36'),
-(16, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:15:36', '2017-09-13 05:15:51', '2017-09-13 05:15:51'),
-(17, 14, 2, 2, 2, 10.00, 0.00, '2017-09-13 05:15:36', '2017-09-13 05:15:51', '2017-09-13 05:15:51'),
-(18, 14, 3, 2, 2, 5.00, 0.00, '2017-09-13 05:15:36', '2017-09-13 05:15:51', '2017-09-13 05:15:51'),
-(19, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:15:36', '2017-09-13 05:15:51', '2017-09-13 05:15:51'),
-(20, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:15:51', '2017-09-13 05:18:23', '2017-09-13 05:18:23'),
-(21, 14, 2, 1, 2, 10.00, 1500.00, '2017-09-13 05:15:51', '2017-09-13 05:18:23', '2017-09-13 05:18:23'),
-(22, 14, 3, 2, 2, 5.00, 75.00, '2017-09-13 05:15:52', '2017-09-13 05:18:23', '2017-09-13 05:18:23'),
-(23, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:15:52', '2017-09-13 05:18:23', '2017-09-13 05:18:23'),
-(24, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:18:23', '2017-09-13 05:29:09', '2017-09-13 05:29:09'),
-(25, 14, 2, 3, 2, 10.00, 75.00, '2017-09-13 05:18:23', '2017-09-13 05:29:09', '2017-09-13 05:29:09'),
-(26, 14, 3, 1, 2, 5.00, 750.00, '2017-09-13 05:18:23', '2017-09-13 05:29:09', '2017-09-13 05:29:09'),
-(27, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:18:24', '2017-09-13 05:29:09', '2017-09-13 05:29:09'),
-(28, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:29:09', '2017-09-13 05:53:40', '2017-09-13 05:53:40'),
-(29, 14, 2, 3, 2, 10.00, 75.00, '2017-09-13 05:29:09', '2017-09-13 05:53:40', '2017-09-13 05:53:40'),
-(30, 14, 3, 1, 2, 5.00, 750.00, '2017-09-13 05:29:09', '2017-09-13 05:53:40', '2017-09-13 05:53:40'),
-(31, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:29:09', '2017-09-13 05:53:40', '2017-09-13 05:53:40'),
-(32, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:53:40', '2017-09-13 05:54:14', '2017-09-13 05:54:14'),
-(33, 14, 2, 3, 2, 10.00, 75.00, '2017-09-13 05:53:40', '2017-09-13 05:54:14', '2017-09-13 05:54:14'),
-(34, 14, 3, 1, 2, 5.00, 750.00, '2017-09-13 05:53:40', '2017-09-13 05:54:14', '2017-09-13 05:54:14'),
-(35, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:53:40', '2017-09-13 05:54:15', '2017-09-13 05:54:15'),
-(36, 14, 4, 2, 2, 2.00, 0.00, '2017-09-13 05:53:40', '2017-09-13 05:54:15', '2017-09-13 05:54:15'),
-(37, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:54:15', '2017-09-13 05:55:46', '2017-09-13 05:55:46'),
-(38, 14, 2, 3, 2, 10.00, 75.00, '2017-09-13 05:54:15', '2017-09-13 05:55:46', '2017-09-13 05:55:46'),
-(39, 14, 3, 1, 2, 5.00, 750.00, '2017-09-13 05:54:15', '2017-09-13 05:55:46', '2017-09-13 05:55:46'),
-(40, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:54:15', '2017-09-13 05:55:46', '2017-09-13 05:55:46'),
-(41, 14, 4, 1, 2, 2.00, 300.00, '2017-09-13 05:54:15', '2017-09-13 05:55:46', '2017-09-13 05:55:46'),
-(42, 14, 1, NULL, 1, 15000.00, 15000.00, '2017-09-13 05:55:46', '2017-09-13 05:55:47', NULL),
-(43, 14, 2, 3, 2, 10.00, 75.00, '2017-09-13 05:55:46', '2017-09-13 05:55:47', NULL),
-(44, 14, 3, 1, 2, 5.00, 750.00, '2017-09-13 05:55:46', '2017-09-13 05:55:47', NULL),
-(45, 14, 5, NULL, 1, 500.00, 500.00, '2017-09-13 05:55:46', '2017-09-13 05:55:47', NULL),
-(46, 14, 4, 3, 2, 2.00, 15.00, '2017-09-13 05:55:46', '2017-09-13 05:55:47', NULL),
-(47, 15, 1, NULL, 1, 50000.00, 50000.00, '2017-09-13 05:56:32', '2017-09-13 05:56:32', NULL),
-(48, 15, 2, 1, 2, 40.00, 20000.00, '2017-09-13 05:56:32', '2017-09-13 05:56:32', NULL),
-(49, 16, 1, NULL, 1, 97000.00, 97000.00, '2017-09-14 00:32:24', '2017-09-14 00:32:50', '2017-09-14 00:32:50'),
-(50, 16, 2, 1, 2, 60.00, 58200.00, '2017-09-14 00:32:24', '2017-09-14 00:32:50', '2017-09-14 00:32:50'),
-(51, 16, 1, NULL, 1, 9700.00, 9700.00, '2017-09-14 00:32:50', '2017-09-14 00:32:50', NULL),
-(52, 16, 2, 1, 2, 60.00, 5820.00, '2017-09-14 00:32:50', '2017-09-14 00:32:50', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_salary_process`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_salary_process` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `posting_rec_id` int(11) NOT NULL,
-  `salary_date` date NOT NULL,
-  `salary_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `created_by` int(11) NOT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `posting_rec_id` (`posting_rec_id`),
-  KEY `created_by` (`created_by`),
-  KEY `updated_by` (`updated_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `payroll_salary_process`
---
-
-INSERT INTO `payroll_salary_process` (`id`, `posting_rec_id`, `salary_date`, `salary_amount`, `created_by`, `updated_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, '2017-10-01', 56472.71, 1, NULL, '2017-11-04 02:36:15', '2017-11-04 03:02:44', NULL),
-(2, 13, '2017-10-01', 40544.00, 1, NULL, '2017-11-04 02:36:16', '2017-11-04 02:36:17', NULL),
-(3, 19, '2017-10-01', 30903.67, 1, NULL, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(4, 1, '2017-11-01', 75022.33, 1, NULL, '2017-11-04 03:19:36', '2017-11-04 03:19:37', NULL),
-(5, 19, '2017-11-01', 29600.67, 1, NULL, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_salary_process_details`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_salary_process_details` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `salary_process_id` int(10) unsigned NOT NULL,
-  `payroll_hrm_id` int(10) unsigned NOT NULL,
-  `pay_scale_id` int(10) unsigned DEFAULT NULL,
-  `allowance_id` int(10) unsigned DEFAULT NULL,
-  `deduction_id` int(10) unsigned DEFAULT NULL,
-  `process_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1=allowance,2=deduction,3=pay scale',
-  `from_date` date NOT NULL,
-  `to_date` date NOT NULL,
-  `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `basic_amount` decimal(10,2) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `salary_process_id` (`salary_process_id`),
-  KEY `pay_scale_id` (`pay_scale_id`),
-  KEY `allowance_id` (`allowance_id`),
-  KEY `dedeuction_id` (`deduction_id`),
-  KEY `payroll_hrm_id` (`payroll_hrm_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=54 ;
-
---
--- Dumping data for table `payroll_salary_process_details`
---
-
-INSERT INTO `payroll_salary_process_details` (`id`, `salary_process_id`, `payroll_hrm_id`, `pay_scale_id`, `allowance_id`, `deduction_id`, `process_type`, `from_date`, `to_date`, `amount`, `basic_amount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 2, 2, NULL, NULL, 3, '2017-10-15', '2017-10-31', 19467.74, 35500.00, '2017-11-04 02:36:15', '2017-11-04 03:11:38', NULL),
-(2, 1, 2, NULL, NULL, 3, 2, '2017-11-04', '2017-11-10', 214.52, 0.00, '2017-11-04 02:36:15', '2017-11-04 02:47:47', '2017-11-04 02:47:47'),
-(3, 1, 2, NULL, 15, NULL, 1, '2017-10-15', '2017-10-31', 7787.10, 0.00, '2017-11-04 02:36:15', '2017-11-04 03:11:38', NULL),
-(4, 1, 2, NULL, 18, NULL, 1, '2017-10-15', '2017-10-31', 82.26, 0.00, '2017-11-04 02:36:15', '2017-11-04 03:11:38', NULL),
-(5, 1, 2, NULL, 17, NULL, 1, '2017-10-15', '2017-10-31', 1428.00, 0.00, '2017-11-04 02:36:15', '2017-11-04 03:11:38', NULL),
-(6, 1, 2, NULL, 16, NULL, 1, '2017-10-15', '2017-10-31', 822.58, 0.00, '2017-11-04 02:36:15', '2017-11-04 03:11:39', NULL),
-(7, 1, 2, NULL, 24, NULL, 1, '2017-10-15', '2017-10-31', 4866.94, 0.00, '2017-11-04 02:36:15', '2017-11-04 03:11:39', NULL),
-(8, 1, 2, NULL, 20, NULL, 1, '2017-10-15', '2017-10-31', 3893.55, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(9, 1, 2, NULL, 19, NULL, 1, '2017-10-15', '2017-10-31', 268.71, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(10, 1, 2, NULL, 22, NULL, 1, '2017-10-15', '2017-10-31', 2920.16, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(11, 1, 4, 1, NULL, NULL, 3, '2017-10-01', '2017-10-14', 9935.48, 22000.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(12, 1, 4, NULL, NULL, 4, 2, '2017-10-01', '2017-10-14', 225.81, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(13, 1, 4, NULL, NULL, 3, 2, '2017-10-01', '2017-10-14', 429.03, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(14, 1, 4, NULL, 15, NULL, 1, '2017-10-01', '2017-10-14', 3974.19, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(15, 1, 4, NULL, 17, NULL, 1, '2017-10-01', '2017-10-14', 1176.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(16, 1, 4, NULL, 21, NULL, 1, '2017-10-01', '2017-10-14', 993.55, 0.00, '2017-11-04 02:36:16', '2017-11-04 03:11:39', NULL),
-(17, 2, 1, 1, NULL, NULL, 3, '2017-10-01', '2017-10-31', 22000.00, 22000.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(18, 2, 1, NULL, NULL, 4, 2, '2017-10-01', '2017-10-31', 500.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(19, 2, 1, NULL, NULL, 3, 2, '2017-10-01', '2017-10-31', 950.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(20, 2, 1, NULL, 15, NULL, 1, '2017-10-01', '2017-10-31', 8800.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(21, 2, 1, NULL, 17, NULL, 1, '2017-10-01', '2017-10-31', 2604.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(22, 2, 1, NULL, 16, NULL, 1, '2017-10-01', '2017-10-31', 1500.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(23, 2, 1, NULL, 23, NULL, 1, '2017-10-01', '2017-10-31', 1100.00, 0.00, '2017-11-04 02:36:16', '2017-11-04 02:36:16', NULL),
-(24, 2, 1, NULL, 19, NULL, 1, '2017-10-01', '2017-10-31', 490.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(25, 2, 1, NULL, 24, NULL, 1, '2017-10-01', '2017-10-31', 5500.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(26, 3, 3, 5, NULL, NULL, 3, '2017-10-01', '2017-10-31', 16000.00, 16000.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(27, 3, 3, NULL, NULL, 1, 2, '2017-10-01', '2017-10-31', 500.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(28, 3, 3, NULL, 15, NULL, 1, '2017-10-01', '2017-10-31', 6400.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(29, 3, 3, NULL, 18, NULL, 1, '2017-10-17', '2017-10-20', 19.35, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(30, 3, 3, NULL, 17, NULL, 1, '2017-10-01', '2017-10-31', 2604.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(31, 3, 3, NULL, 16, NULL, 1, '2017-10-10', '2017-10-15', 290.32, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(32, 3, 3, NULL, 19, NULL, 1, '2017-10-01', '2017-10-31', 490.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(33, 3, 3, NULL, 20, NULL, 1, '2017-10-01', '2017-10-31', 3200.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(34, 3, 3, NULL, 22, NULL, 1, '2017-10-01', '2017-10-31', 2400.00, 0.00, '2017-11-04 02:36:17', '2017-11-04 02:36:17', NULL),
-(35, 1, 2, NULL, NULL, 4, 2, '2017-10-15', '2017-10-31', 274.19, 0.00, '2017-11-04 03:02:44', '2017-11-04 03:11:38', NULL),
-(36, 4, 2, 2, NULL, NULL, 3, '2017-11-01', '2017-11-30', 35500.00, 35500.00, '2017-11-04 03:19:36', '2017-11-13 03:22:55', NULL),
-(37, 4, 2, NULL, NULL, 4, 2, '2017-11-01', '2017-11-30', 500.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(38, 4, 2, NULL, NULL, 3, 2, '2017-11-04', '2017-11-10', 221.67, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(39, 4, 2, NULL, 15, NULL, 1, '2017-11-01', '2017-11-30', 14200.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(40, 4, 2, NULL, 18, NULL, 1, '2017-11-01', '2017-11-30', 150.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(41, 4, 2, NULL, 17, NULL, 1, '2017-11-01', '2017-11-30', 2604.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(42, 4, 2, NULL, 16, NULL, 1, '2017-11-01', '2017-11-30', 1500.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(43, 4, 2, NULL, 24, NULL, 1, '2017-11-01', '2017-11-30', 8875.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(44, 4, 2, NULL, 20, NULL, 1, '2017-11-01', '2017-11-30', 7100.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(45, 4, 2, NULL, 19, NULL, 1, '2017-11-01', '2017-11-30', 490.00, 0.00, '2017-11-04 03:19:36', '2017-11-13 03:22:56', NULL),
-(46, 4, 2, NULL, 22, NULL, 1, '2017-11-01', '2017-11-30', 5325.00, 0.00, '2017-11-04 03:19:37', '2017-11-13 03:22:56', NULL),
-(47, 5, 3, 5, NULL, NULL, 3, '2017-11-01', '2017-11-30', 16000.00, 16000.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(48, 5, 3, NULL, NULL, 2, 2, '2017-11-14', '2017-11-20', 1493.33, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(49, 5, 3, NULL, 15, NULL, 1, '2017-11-01', '2017-11-30', 6400.00, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(50, 5, 3, NULL, 17, NULL, 1, '2017-11-01', '2017-11-30', 2604.00, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(51, 5, 3, NULL, 22, NULL, 1, '2017-11-01', '2017-11-30', 2400.00, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(52, 5, 3, NULL, 19, NULL, 1, '2017-11-01', '2017-11-30', 490.00, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL),
-(53, 5, 3, NULL, 20, NULL, 1, '2017-11-01', '2017-11-30', 3200.00, 0.00, '2017-11-20 02:48:14', '2017-11-20 02:48:14', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payroll_types`
---
-
-CREATE TABLE IF NOT EXISTS `payroll_types` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `name` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `payroll_types`
---
-
-INSERT INTO `payroll_types` (`id`, `deleted_at`, `created_at`, `updated_at`, `name`) VALUES
-(1, NULL, '2017-08-23 03:18:09', '2017-08-23 03:18:09', 'Earning'),
-(2, NULL, '2017-08-23 03:18:36', '2017-08-23 03:18:36', 'Deduction'),
-(3, NULL, '2017-08-23 03:22:31', '2017-08-23 03:22:31', 'Taxation'),
-(4, NULL, '2017-08-23 03:22:51', '2017-08-23 03:22:51', 'Festival Earning');
 
 -- --------------------------------------------------------
 
@@ -2325,7 +1725,7 @@ INSERT INTO `role_menu` (`id`, `role_id`, `menu_id`, `acc_view`, `acc_create`, `
 (390, 1, 277, 1, 1, 1, 1, '2017-11-06 03:37:59', '2017-11-06 03:37:59', NULL),
 (391, 1, 278, 1, 1, 1, 0, '2017-11-09 02:41:20', '2017-11-09 02:41:20', NULL),
 (392, 1, 279, 1, 1, 0, 0, '2017-11-12 23:56:55', '2017-11-12 23:56:55', NULL),
-(393, 1, 280, 1, 1, 0, 0, '2017-11-14 03:20:32', '2017-11-14 03:20:33', NULL),
+(393, 1, 280, 1, 1, 1, 1, '2017-11-14 03:20:32', '2017-12-25 06:03:07', NULL),
 (394, 4, 281, 1, 1, 1, 1, '2017-11-19 03:17:42', '2017-11-19 03:17:42', NULL),
 (395, 1, 181, 1, 1, 1, 1, '2017-11-19 05:04:23', '2017-11-19 05:04:23', NULL),
 (396, 1, 281, 1, 1, 1, 1, '2017-11-19 05:04:23', '2017-11-19 05:04:23', NULL),
@@ -3821,23 +3221,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `name`, `context_id`, `emp_id`, `email`, `user_name`, `password`, `type`, `remember_token`, `user_level`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Super Admin', 1, NULL, 'akebulr@gmail.com', 'admin', '$2y$10$lhA9VpYOcEpQwpghPFbUYOGDXP7995LcljguFYCBnKJNii4BNbmey', 'Employee', 'nvYKHNCdV5hMZGBFs2YEGDedvspuFT3sjir9asEGJqocf8HRrkPU89CeGWPA', 0, NULL, '2017-02-18 20:35:37', '2017-10-13 22:05:57');
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `client_info`
---
-ALTER TABLE `client_info`
-  ADD CONSTRAINT `fk_client_info_1` FOREIGN KEY (`id`) REFERENCES `agent_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `client_interest_country`
---
-ALTER TABLE `client_interest_country`
-  ADD CONSTRAINT `fk_client_interest_country_1` FOREIGN KEY (`client_id`) REFERENCES `client_info` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_client_interest_country_2` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
