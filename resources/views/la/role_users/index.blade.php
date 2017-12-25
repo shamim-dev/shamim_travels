@@ -4,7 +4,7 @@
 @section("contentheader_description", trans("messages.Role Users listing"))
 @section("section", trans("messages.Role Users"))
 @section("sub_section", trans("messages.Listing"))
-@section("htmlheader_title", trans("messages.Role Users Listing"))
+@section("htmlheader_title", trans("messages.Role Users listing"))
 
 @section("headerElems")
 @la_access("Role_Users", "create")

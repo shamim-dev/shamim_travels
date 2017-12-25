@@ -111,7 +111,9 @@ Route::group(['as' => $as, 'middleware' => ['auth','locale','revalidate']], func
 	Route::resource(config('laraadmin.adminRoute') . '/bank_branches', 'LA\Bank_BranchesController');
 	Route::get(config('laraadmin.adminRoute') . '/bank_branch_dt_ajax', 'LA\Bank_BranchesController@dtajax');
 
-
+	/* ================== Agents ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/agent_info', 'Travels\AgentController');
+	Route::get(config('laraadmin.adminRoute') . '/agent_dt_ajax', 'Travels\AgentController@dtajax');
 
 
 });

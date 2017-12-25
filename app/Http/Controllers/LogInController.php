@@ -29,18 +29,6 @@ class LogInController extends Controller
         $user_password = $request->input('user_password');
 
 
-        //$rules = validateRules("Battalions", $request);
-            
-        //$validator = Validator::make($request->all(), $rules);
-        
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
-        
-        //$insert_id = Module::insert("Battalions", $request);
-        
-        //return redirect()->route(config('laraadmin.adminRoute') . '.battalions.index');
-
         $user = DB::table('sys_user')->where('user_name', $user_name)
                     ->where('user_password', $user_password)
                     ->count();

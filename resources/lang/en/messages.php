@@ -153,9 +153,14 @@ return [
     'Description'=>'Description',
     'Add Role'=>'Add Role',
     'Roles listing'=>'Roles listing',
+    'Add Role User'=>'Add Role User',
+    'Role Users'=>'Role Users',
+    'Role Users listing'=>'Role Users listing',
     //.......Role end.......
 
-
+    'Add Designation'=>'Add Designation',
+    'Designations'=>'Designations',
+    'Designations listing'=>'Designations listing',
     //........Admin Setup end........
     
     //........HR Setup start........
@@ -343,4 +348,24 @@ return [
     'Mother Name' => 'Mother Name',
     'Spouse Name' => 'Spouse Name',
     /* -------- Family Information End -------- */
+    
+    /*------------- Agent Info ------------------------*/
+    'Agent'  => 'Agents',
+    'Agent Info'  => 'Agents',
+    'Agent listing'  => 'Agent listing',
+    'Add Agent'  => 'Add Agent',
+    'agent_name'  => 'Agent Name',
+    'mobile_no'  => 'Mobile No',
+    'mobile_no_1'  => 'Mobile No',
+    'mobile_no_2'  => 'Mobile No',
+    'email'  => 'Email',
+    'email_1'  => 'Email Address',
+    'email_2'  => 'Email Address',
+    'address'  => 'Address',
+    'Enter Name'  => 'Enter Name',
+    'Enter mobile no'  => 'Enter mobile no',
+    'Enter email'  => 'Enter email',
+    'Enter address'  => 'Enter Address',
+    'Image'  => 'Image',
+    /*------------- Agent Info ------------------------*/
 ];
